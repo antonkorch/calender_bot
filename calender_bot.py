@@ -3,6 +3,7 @@ import datetime
 import configparser
 import json
 import os
+import time
 
 def save_data():
     with open('data.json', 'w') as f:
@@ -80,4 +81,18 @@ def show_once(message):
                     msglist.append(mess)
         msglist.sort()
         bot.send_message (message.chat.id, "\n".join(msglist))
+
+
+@bot.message_handler(commands=['start_everyday'])
+def start_everyday(message):
+    if message.from_user.id in allowed_users:
+        bot.send_message(message.chat.id, 'Напоминание включено')
+        while True:
+            now = datetime.datetime.now()
+            print (now.hour, now.minute)
+            if now.hour == 4:
+                show_once(message)
+            time.sleep(3600)
+
+
 bot.polling(none_stop=True)
