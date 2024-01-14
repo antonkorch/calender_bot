@@ -6,16 +6,16 @@ import os
 import time
 
 def save_data():
-    with open('data.json', 'w') as f:
+    with open(f'{dir_path}/data.json', 'w') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
 def load_data():
     global data
-    if not os.path.exists('data.json'):
+    if not os.path.exists(f'{dir_path}/data.json'):
         data = {"w": []}
         save_data()
     else:
-        with open('data.json', 'r') as f:
+        with open(f'{dir_path}/data.json', 'r') as f:
             data = json.load(f)
 
 def find_coming_date(day_of_week):
@@ -35,8 +35,10 @@ def check_past_date(date):
     else:
         return True
 
+dir_path = (os.path.dirname(__file__))
+print("Started at: ", dir_path)
 config = configparser.ConfigParser()
-config.read('settings.ini')
+config.read(f'{dir_path}/settings.ini')
 
 allowed_users = list(map(int, config['General']['allowed_users'].split(',')))
 bot = telebot.TeleBot(config['General']['token'])
