@@ -28,7 +28,8 @@ def start(message):
 def show_once(message):
     if message.from_user.id in allowed_users:
         msglist = []
-        events = list_events_from(engine, '2024-04-04')
+        now = datetime.now().strftime('%Y-%m-%d')
+        events = list_events_from(engine, now)
         for event in events:
             date = datetime.strptime(event[0], '%Y-%m-%d')
             time = event[1]
