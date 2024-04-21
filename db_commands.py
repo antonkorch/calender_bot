@@ -1,7 +1,7 @@
 # Description: This file contains the functions that interact with the database.
 from sqlalchemy import text
 from sqlalchemy.orm import sessionmaker
-from models import Cal
+from .models import Cal
 
 
 def add_event(engine, rdow, edate, etime, etext):
