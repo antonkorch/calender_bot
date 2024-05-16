@@ -7,6 +7,11 @@ import os
 from datetime import datetime
 
 def calender_bot():
+    class ExHandler(telebot.ExceptionHandler):
+        def handle(self, error):
+            print('Error: ', error)
+            return True
+    
     dir_path = (os.path.dirname(__file__))
     print("Started at: ", dir_path)
 
@@ -16,7 +21,7 @@ def calender_bot():
     engine = create_engine(f'sqlite:///{dir_path}/calender.db')
 
     allowed_users = list(map(int, config['General']['allowed_users'].split(',')))
-    bot = telebot.TeleBot(config['General']['token'])
+    bot = telebot.TeleBot(config['General']['token'], exception_handler=ExHandler())
 
 
     @bot.message_handler(commands=['start'])
